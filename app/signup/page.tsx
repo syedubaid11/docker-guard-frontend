@@ -1,32 +1,51 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { auth, setToken, setUser } from "../../lib/api";
 
 export default function SignUp() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    company: "",
   });
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign Up Data:", formData);
+    setError(null);
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await auth.signup({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      setToken(res.token);
+      setUser(res.user);
+      router.push("/dashboard");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign up failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen w-full bg-white overflow-hidden tasa-orbiter-display">
-      {/* Grid Background */}
       <div className="fixed inset-0 w-full h-full">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -38,19 +57,15 @@ export default function SignUp() {
         </svg>
       </div>
 
-      {/* Content */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
         <div className="w-full max-w-md">
           <div className="border border-gray-200 rounded-lg p-8 bg-white">
-            {/* Header */}
             <div className="text-center mb-8">
               <h1 className="tasa-orbiter-display text-4xl text-black mb-2">Docker Guard</h1>
               <p className="text-gray-600">Create your account</p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name Field */}
               <div>
                 <label className="block text-sm font-semibold text-black mb-2">Full Name</label>
                 <input
@@ -64,7 +79,6 @@ export default function SignUp() {
                 />
               </div>
 
-              {/* Email Field */}
               <div>
                 <label className="block text-sm font-semibold text-black mb-2">Email Address</label>
                 <input
@@ -78,20 +92,6 @@ export default function SignUp() {
                 />
               </div>
 
-              {/* Company Field */}
-              <div>
-                <label className="block text-sm font-semibold text-black mb-2">Company (Optional)</label>
-                <input
-                  type="text"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  placeholder="Your Company"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black transition-colors"
-                />
-              </div>
-
-              {/* Password Field */}
               <div>
                 <label className="block text-sm font-semibold text-black mb-2">Password</label>
                 <input
@@ -105,7 +105,6 @@ export default function SignUp() {
                 />
               </div>
 
-              {/* Confirm Password Field */}
               <div>
                 <label className="block text-sm font-semibold text-black mb-2">Confirm Password</label>
                 <input
@@ -119,29 +118,21 @@ export default function SignUp() {
                 />
               </div>
 
-              {/* Terms */}
-              <div className="flex items-start gap-2 pt-2">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  className="mt-1 cursor-pointer"
-                  required
-                />
-                <label htmlFor="terms" className="text-sm text-gray-600">
-                  I agree to the <span className="font-semibold text-black hover:underline cursor-pointer">Terms of Service</span> and <span className="font-semibold text-black hover:underline cursor-pointer">Privacy Policy</span>
-                </label>
-              </div>
+              {error && (
+                <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
+                  {error}
+                </p>
+              )}
 
-              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-900 transition-colors duration-200 mt-6"
+                disabled={loading}
+                className="w-full px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-900 transition-colors duration-200 mt-6 disabled:opacity-60"
               >
-                Create Account
+                {loading ? "Creating account…" : "Create Account"}
               </button>
             </form>
 
-            {/* Sign In Link */}
             <div className="text-center mt-6 pt-6 border-t border-gray-200">
               <p className="text-gray-600">
                 Already have an account?{" "}
@@ -149,22 +140,6 @@ export default function SignUp() {
                   Sign In
                 </a>
               </p>
-            </div>
-          </div>
-
-          {/* Benefits */}
-          <div className="mt-8 grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <div className="font-bold text-black text-lg">Free</div>
-              <p className="text-xs text-gray-600 mt-1">No credit card required</p>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-black text-lg">Fast</div>
-              <p className="text-xs text-gray-600 mt-1">Get started in seconds</p>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-black text-lg">Secure</div>
-              <p className="text-xs text-gray-600 mt-1">Enterprise-grade security</p>
             </div>
           </div>
         </div>

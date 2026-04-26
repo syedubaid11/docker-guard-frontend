@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { auth, setToken, setUser } from "../../lib/api";
 
 export default function SignIn() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -17,14 +22,27 @@ export default function SignIn() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign In Data:", formData);
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await auth.login({
+        email: formData.email,
+        password: formData.password,
+      });
+      setToken(res.token);
+      setUser(res.user);
+      router.push("/dashboard");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign in failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen w-full bg-white overflow-hidden tasa-orbiter-display">
-      {/* Grid Background */}
       <div className="fixed inset-0 w-full h-full">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -36,19 +54,15 @@ export default function SignIn() {
         </svg>
       </div>
 
-      {/* Content */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
         <div className="w-full max-w-md">
           <div className="border border-gray-200 rounded-lg p-8 bg-white">
-            {/* Header */}
             <div className="text-center mb-8">
               <h1 className="tasa-orbiter-display text-4xl text-black mb-2">Docker Guard</h1>
               <p className="text-gray-600">Welcome back</p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Email Field */}
               <div>
                 <label className="block text-sm font-semibold text-black mb-2">Email Address</label>
                 <input
@@ -62,13 +76,9 @@ export default function SignIn() {
                 />
               </div>
 
-              {/* Password Field */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-sm font-semibold text-black">Password</label>
-                  <a href="#" className="text-sm text-gray-600 hover:text-black transition-colors">
-                    Forgot?
-                  </a>
                 </div>
                 <input
                   type="password"
@@ -81,54 +91,28 @@ export default function SignIn() {
                 />
               </div>
 
-              {/* Remember Me */}
-              <div className="flex items-center gap-2 pt-2">
-                <input
-                  type="checkbox"
-                  id="rememberMe"
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleChange}
-                  className="cursor-pointer"
-                />
-                <label htmlFor="rememberMe" className="text-sm text-gray-600 cursor-pointer">
-                  Remember me
-                </label>
-              </div>
+              {error && (
+                <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
+                  {error}
+                </p>
+              )}
 
-              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-900 transition-colors duration-200 mt-6"
+                disabled={loading}
+                className="w-full px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-900 transition-colors duration-200 mt-6 disabled:opacity-60"
               >
-                Sign In
+                {loading ? "Signing in…" : "Sign In"}
               </button>
             </form>
 
-            {/* Sign Up Link */}
             <div className="text-center mt-6 pt-6 border-t border-gray-200">
               <p className="text-gray-600">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <a href="/signup" className="font-semibold text-black hover:underline">
                   Sign Up
                 </a>
               </p>
-            </div>
-          </div>
-
-          {/* Features */}
-          <div className="mt-8 grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <div className="font-bold text-black text-lg">Instant</div>
-              <p className="text-xs text-gray-600 mt-1">Scan in seconds</p>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-black text-lg">Accurate</div>
-              <p className="text-xs text-gray-600 mt-1">99.9% detection</p>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-black text-lg">Simple</div>
-              <p className="text-xs text-gray-600 mt-1">Easy to use</p>
             </div>
           </div>
         </div>
