@@ -34,10 +34,10 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="px-8 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-900 transition-colors duration-200">
+              <button className="px-8 py-3 bg-black text-white font-medium rounded-lg hover:cursor-pointer hover:bg-gray-900 transition-colors duration-200">
                 Sign In
               </button>
-              <button className="px-8 py-3 bg-gray-100 text-black font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200 border border-gray-300">
+              <button className="px-8 py-3 bg-gray-100 text-black font-medium rounded-lg hover:cursor-pointer hover:bg-gray-200 transition-colors duration-200 border border-gray-300">
                 Sign Up
               </button>
             </div>
