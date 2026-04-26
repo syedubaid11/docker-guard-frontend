@@ -17,14 +17,14 @@ export default function Home() {
 
       {/* Content */}
       <main className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
-        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="max-w-387.5 w-full grid grid-cols-1 lg:grid-cols-3 gap-12 tasa-orbiter-display">
           
           {/* Left Section */}
           <div className="lg:col-span-2 space-y-12">
             {/* Header */}
             <div className="space-y-6">
-              <h1 className="text-6xl md:text-7xl font-bold text-black tracking-tight">
-                Docker Guard
+              <h1 className="tasa-orbiter-display text-6xl md:text-7xl text-black tracking-tight">
+                Dockerguard
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
                 Your only way to be <span className="font-semibold text-black">vulnerability free</span> from Docker images.

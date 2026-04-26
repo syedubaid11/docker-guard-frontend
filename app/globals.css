@@ -24,3 +24,26 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* TASA Orbiter Font Utilities */
+.tasa-orbiter-display {
+  font-family: "TASA Orbiter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.tasa-orbiter-heading {
+  font-family: "TASA Orbiter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.tasa-orbiter-body {
+  font-family: "TASA Orbiter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
