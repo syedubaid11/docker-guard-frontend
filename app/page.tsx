@@ -115,47 +115,47 @@ export default function Home() {
 
           {/* Right Section - Recent Breakages */}
           <div className="lg:col-span-1">
-            <div className="border border-gray-200 rounded-lg p-8 bg-gray-50 sticky top-8 h-fit">
+            <div className="border border-gray-200/30 rounded-lg p-8 bg-white/10 backdrop-blur-md sticky top-8 h-fit">
               <h2 className="text-xl font-bold text-black mb-6">Recent Breakages</h2>
               
               <div className="space-y-4">
                 {/* Breakage Item 1 */}
-                <div className="border-l-4 border-red-500 pl-4 py-3 bg-white rounded p-3">
+                <div className="border-l-4 border-red-500 pl-4 py-3 bg-white/5 backdrop-blur-sm rounded p-3">
                   <p className="font-semibold text-black text-sm">OpenSSL Vulnerability</p>
-                  <p className="text-xs text-gray-600 mt-1">CVE-2024-0567</p>
+                  <p className="text-xs text-gray-700 mt-1">CVE-2024-0567</p>
                   <p className="text-xs text-red-600 font-medium mt-2">Critical</p>
                 </div>
 
                 {/* Breakage Item 2 */}
-                <div className="border-l-4 border-orange-500 pl-4 py-3 bg-white rounded p-3">
+                <div className="border-l-4 border-orange-500 pl-4 py-3 bg-white/5 backdrop-blur-sm rounded p-3">
                   <p className="font-semibold text-black text-sm">Log4j Exposure</p>
-                  <p className="text-xs text-gray-600 mt-1">CVE-2024-0891</p>
+                  <p className="text-xs text-gray-700 mt-1">CVE-2024-0891</p>
                   <p className="text-xs text-orange-600 font-medium mt-2">High</p>
                 </div>
 
                 {/* Breakage Item 3 */}
-                <div className="border-l-4 border-orange-500 pl-4 py-3 bg-white rounded p-3">
+                <div className="border-l-4 border-orange-500 pl-4 py-3 bg-white/5 backdrop-blur-sm rounded p-3">
                   <p className="font-semibold text-black text-sm">Node Package Issue</p>
-                  <p className="text-xs text-gray-600 mt-1">npm-package-v3.2.1</p>
+                  <p className="text-xs text-gray-700 mt-1">npm-package-v3.2.1</p>
                   <p className="text-xs text-orange-600 font-medium mt-2">High</p>
                 </div>
 
                 {/* Breakage Item 4 */}
-                <div className="border-l-4 border-yellow-500 pl-4 py-3 bg-white rounded p-3">
+                <div className="border-l-4 border-yellow-500 pl-4 py-3 bg-white/5 backdrop-blur-sm rounded p-3">
                   <p className="font-semibold text-black text-sm">Outdated Python Module</p>
-                  <p className="text-xs text-gray-600 mt-1">requests-2.26.0</p>
+                  <p className="text-xs text-gray-700 mt-1">requests-2.26.0</p>
                   <p className="text-xs text-yellow-600 font-medium mt-2">Medium</p>
                 </div>
 
                 {/* Breakage Item 5 */}
-                <div className="border-l-4 border-yellow-500 pl-4 py-3 bg-white rounded p-3">
+                <div className="border-l-4 border-yellow-500 pl-4 py-3 bg-white/5 backdrop-blur-sm rounded p-3">
                   <p className="font-semibold text-black text-sm">Dependency Conflict</p>
-                  <p className="text-xs text-gray-600 mt-1">zlib-1.2.11</p>
+                  <p className="text-xs text-gray-700 mt-1">zlib-1.2.11</p>
                   <p className="text-xs text-yellow-600 font-medium mt-2">Medium</p>
                 </div>
               </div>
 
-              <button className="w-full mt-6 py-2 border border-gray-300 text-black text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
+              <button className="w-full mt-6 py-2 border border-gray-300/30 text-black text-sm font-medium rounded-lg hover:bg-white/10 transition-colors">
                 View All Issues
               </button>
             </div>
