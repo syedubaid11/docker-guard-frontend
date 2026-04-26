@@ -77,6 +77,40 @@ export default function Home() {
                 <p className="text-sm text-gray-600">Seamless integration with your existing CI/CD pipeline</p>
               </div>
             </div>
+
+            {/* AI Summary Section */}
+            <div className="border border-gray-200 rounded-lg p-8 bg-gradient-to-br from-gray-50 to-white pt-12">
+              <div className="space-y-4">
+                <h2 className="tasa-orbiter-heading text-3xl text-black">AI-Powered Summaries</h2>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Our advanced AI engine automatically analyzes vulnerability reports and generates intelligent, 
+                  <span className="font-semibold text-black"> easy-to-understand summaries</span>. No more sifting through complex technical reports.
+                </p>
+                <ul className="space-y-3 pt-4">
+                  <li className="flex items-start gap-3">
+                    <span className="text-black font-bold text-xl mt-1">→</span>
+                    <div>
+                      <p className="font-semibold text-black">Instant Insights</p>
+                      <p className="text-sm text-gray-600">Get actionable recommendations at a glance</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-black font-bold text-xl mt-1">→</span>
+                    <div>
+                      <p className="font-semibold text-black">Contextual Analysis</p>
+                      <p className="text-sm text-gray-600">Understand the impact and severity in your environment</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-black font-bold text-xl mt-1">→</span>
+                    <div>
+                      <p className="font-semibold text-black">Remediation Steps</p>
+                      <p className="text-sm text-gray-600">Get step-by-step guidance to fix vulnerabilities</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Right Section - Recent Breakages */}
