@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
@@ -23,10 +23,7 @@ export function setUser(user: object) {
   localStorage.setItem("dg_user", JSON.stringify(user));
 }
 
-export async function api<T = unknown>(
-  path: string,
-  options: RequestInit = {},
-): Promise<T> {
+export async function api<T = unknown> (path: string,options: RequestInit = {},) : Promise<T> {
   const token = getToken();
   const res = await fetch(`${API_URL}${path}`, {
     ...options,

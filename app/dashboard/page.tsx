@@ -44,7 +44,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen w-full bg-white tasa-orbiter-display">
       <header className="border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Docker Guard</h1>
+        <h1 className="text-2xl font-bold text-black">DockerGuard</h1>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-600">{user?.email}</span>
           <a
@@ -63,7 +63,7 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-10">
-        <h2 className="text-3xl mb-6">Your Scans</h2>
+        <h2 className="text-3xl mb-6 text-black">Your Scans</h2>
 
         {error && (
           <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2 mb-4">
@@ -86,7 +86,7 @@ export default function Dashboard() {
         ) : (
           <div className="border border-gray-200 rounded-lg overflow-hidden">
             <table className="w-full text-left text-sm">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-gray-50 border-b border-gray-200 text-gray-800">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Image</th>
                   <th className="px-4 py-3 font-semibold">Status</th>
@@ -96,7 +96,7 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 {items.map((s) => (
-                  <tr key={s.id} className="border-b border-gray-100 hover:bg-gray-50">
+                  <tr key={s.id} className="border-b border-gray-100 hover:bg-gray-50 text-black">
                     <td className="px-4 py-3 font-mono text-xs">{s.image}</td>
                     <td className="px-4 py-3">
                       <span
