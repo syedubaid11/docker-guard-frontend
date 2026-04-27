@@ -58,7 +58,7 @@ export default function SignIn() {
         <div className="w-full max-w-md">
           <div className="border border-gray-200 rounded-lg p-8 bg-white">
             <div className="text-center mb-8">
-              <h1 className="tasa-orbiter-display text-4xl text-black mb-2">Docker Guard</h1>
+              <h1 className="tasa-orbiter-display text-4xl text-black mb-2">dockerguard</h1>
               <p className="text-gray-600">Welcome back</p>
             </div>
 
