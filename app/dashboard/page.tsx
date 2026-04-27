@@ -44,7 +44,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen w-full bg-white tasa-orbiter-display">
       <header className="border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-black">DockerGuard</h1>
+        <h1 className="text-2xl font-bold text-black">dockerguard</h1>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-600">{user?.email}</span>
           <a
