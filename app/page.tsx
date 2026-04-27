@@ -218,21 +218,21 @@ export default function Home() {
               <h3 className="text-xl font-semibold text-black mb-8">Efficiency & Scale</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="space-y-3">
-                  <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-lg text-lg font-bold"><GoGraph /></div>
+                  <div className="inline-block px-4 py-2 bg-white text-black rounded-lg text-lg font-bold"><GoGraph /></div>
                   <h4 className="font-semibold text-black text-lg">Unlimited Concurrency</h4>
                   <p className="text-sm text-gray-700 leading-relaxed">
                     Our cloud-native architecture handles thousands of concurrent scans without slowdown. Enterprise teams can scan entire registries in minutes, not hours.
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-lg text-lg font-bold"><IoMdSettings /></div>
+                  <div className="inline-block px-4 py-2 bg-white text-black rounded-lg text-lg font-bold"><IoMdSettings /></div>
                   <h4 className="font-semibold text-black text-lg">Zero Maintenance</h4>
                   <p className="text-sm text-gray-700 leading-relaxed">
                     We maintain all scanning tools, vulnerability databases, and infrastructure. You focus on security, we handle the ops.
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-lg font-bold"><IoIosSync /></div>
+                  <div className="inline-block px-4 py-2 bg-white text-black rounded-lg text-lg font-bold"><IoIosSync /></div>
                   <h4 className="font-semibold text-black text-lg">Always Updated</h4>
                   <p className="text-sm text-gray-700 leading-relaxed">
                     Vulnerability databases, scanning engines, and AI models are automatically updated daily. You never fall behind on threats.
@@ -244,26 +244,35 @@ export default function Home() {
             {/* How It Works */}
             <div className="mt-12 pt-8 border-t border-gray-200">
               <h3 className="text-xl font-semibold text-black mb-6">How It Works</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3">1</div>
-                  <p className="font-semibold text-black">Paste Image</p>
-                  <p className="text-sm text-gray-600 mt-2">Enter your Docker image</p>
+              <div className="flex items-center justify-between gap-4">
+                <div className="text-center flex-1">
+                  <div className="bg-white text-black rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3 border border-black">1</div>
+                  <p className="font-semibold text-black text-sm">Paste Image</p>
+                  <p className="text-xs text-gray-600 mt-1">Enter your Docker image</p>
                 </div>
-                <div className="text-center">
-                  <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3">2</div>
-                  <p className="font-semibold text-black">Comprehensive Scan</p>
-                  <p className="text-sm text-gray-600 mt-2">Multiple scan engines run</p>
+                
+                <p className="text-2xl text-gray-400">→</p>
+
+                <div className="text-center flex-1">
+                  <div className="bg-white text-black rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3 border border-black">2</div>
+                  <p className="font-semibold text-black text-sm">Comprehensive Scan</p>
+                  <p className="text-xs text-gray-600 mt-1">Multiple scan engines run</p>
                 </div>
-                <div className="text-center">
-                  <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3">3</div>
-                  <p className="font-semibold text-black">AI Analysis</p>
-                  <p className="text-sm text-gray-600 mt-2">AI synthesizes findings</p>
+
+                <p className="text-2xl text-gray-400">→</p>
+
+                <div className="text-center flex-1">
+                  <div className="bg-white text-black rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3 border border-black">3</div>
+                  <p className="font-semibold text-black text-sm">AI Analysis</p>
+                  <p className="text-xs text-gray-600 mt-1">AI synthesizes findings</p>
                 </div>
-                <div className="text-center">
-                  <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3">4</div>
-                  <p className="font-semibold text-black">Get Insights</p>
-                  <p className="text-sm text-gray-600 mt-2">Actionable recommendations</p>
+
+                <p className="text-2xl text-gray-400">→</p>
+
+                <div className="text-center flex-1">
+                  <div className="bg-white text-black rounded-full w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3 border border-black">4</div>
+                  <p className="font-semibold text-black text-sm">Get Insights</p>
+                  <p className="text-xs text-gray-600 mt-1">Actionable recommendations</p>
                 </div>
               </div>
             </div>
