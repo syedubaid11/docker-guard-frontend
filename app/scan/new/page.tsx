@@ -30,7 +30,7 @@ export default function NewScan() {
   return (
     <div className="min-h-screen w-full bg-white tasa-orbiter-display text-black">
       <header className="border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <a href="/dashboard" className="text-2xl font-bold">dockerguard</a>
+        <a href="/dashboard" className="text-2xl font-bold">dockerguard.</a>
         <a href="/dashboard" className="text-sm text-gray-600 hover:text-black">← Back</a>
       </header>
 

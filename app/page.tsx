@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full bg-white border-red-500 p-20">
+    <div className="min-h-screen w-full bg-white p-20">
       {/* Grid Background */}
       <div className="fixed inset-0 w-full h-full">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@ export default function Home() {
       </div>
 
       {/* Content */}
-      <main className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
+      <main className="border-gray-100 rounded-2xl backdrop-blur-sm bg-transparent border-2 relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
         <div className="max-w-387.5 w-full grid grid-cols-1 lg:grid-cols-3 gap-12 tasa-orbiter-display">
           
           {/* Left Section */}
@@ -28,7 +28,7 @@ export default function Home() {
             {/* Header */}
             <div className="space-y-6">
               <h1 className="tasa-orbiter-display text-6xl md:text-7xl text-black tracking-tight">
-                dockerguard
+                dockerguard.
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
                 Your only way to be <span className="font-semibold text-black">vulnerability free</span> from Docker images.

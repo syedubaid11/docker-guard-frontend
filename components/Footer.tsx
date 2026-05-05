@@ -1,5 +1,3 @@
-import { FiGithub, FiTwitter, FiLinkedin, FiMail } from "react-icons/fi";
-
 export default function Footer() {
   return (
     <footer className="relative z-10 w-full bg-white border-t border-gray-200">
@@ -8,7 +6,7 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="space-y-2">
             <h3 className="tasa-orbiter-display text-2xl text-black font-bold">
-              dockerguard
+              dockerguard.
             </h3>
           </div>
 
@@ -37,7 +35,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-gray-200 mt-8 pt-6 flex justify-between items-center">
           <p className="text-xs text-gray-600">
-            &copy; {new Date().getFullYear()} dockerguard
+            &copy; {new Date().getFullYear()} dockerguard.
           </p>
         </div>
       </div>
