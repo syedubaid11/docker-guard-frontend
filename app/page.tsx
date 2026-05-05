@@ -1,4 +1,3 @@
-"use client";
 import { GoGraph } from "react-icons/go";
 import { IoMdSettings , IoIosSync } from "react-icons/io";
 import { allBreakages } from "../lib/constants";
@@ -7,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full bg-white">
+    <div className="min-h-screen w-full bg-white border-red-500 p-20">
       {/* Grid Background */}
       <div className="fixed inset-0 w-full h-full">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -159,11 +158,11 @@ export default function Home() {
           <div className="border border-gray-200 rounded-lg p-12 bg-gradient-to-br from-white to-gray-50">
             <h2 className="tasa-orbiter-heading text-4xl text-black mb-8">Built for Modern DevOps</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 tasa-orbiter-heading ">
               {/* The Problem We Solve */}
               <div className="space-y-6">
                 <h3 className="text-xl font-semibold text-black">The Problem</h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-700 leading-relaxed tasa-orbiter-heading">
                   Traditional Docker scanning is broken. Teams juggle multiple tools (<span className="font-mono bg-gray-200 px-2 py-1 rounded text-xs">trivy</span>, <span className="font-mono bg-gray-200 px-2 py-1 rounded text-xs">grype</span>, <span className="font-mono bg-gray-200 px-2 py-1 rounded text-xs">snyk</span>), manage complex dependencies, and waste hours interpreting raw vulnerability data.
                 </p>
                 <div className="space-y-3 mt-4">
@@ -187,7 +186,7 @@ export default function Home() {
               </div>
 
               {/* Our Solution */}
-              <div className="space-y-6">
+              <div className="space-y-6 tasa-orbiter-heading">
                 <h3 className="text-xl font-semibold text-black">Our Solution</h3>
                 <p className="text-gray-700 leading-relaxed">
                   dockerguard eliminates the complexity. <span className="font-semibold text-black">Paste a Docker image. Get instant, intelligent analysis.</span> No setup. No hassle. Just clear security insights.
@@ -214,7 +213,7 @@ export default function Home() {
             </div>
 
             {/* Scalability & Efficiency Section */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="mt-12 pt-8 border-t border-gray-200 tasa-orbiter-heading">
               <h3 className="text-xl font-semibold text-black mb-8">Efficiency & Scale</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="space-y-3">
@@ -242,7 +241,7 @@ export default function Home() {
             </div>
 
             {/* How It Works */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="mt-12 pt-8 border-t border-gray-200 tasa-orbiter-heading">
               <h3 className="text-xl font-semibold text-black mb-6">How It Works</h3>
               <div className="flex items-center justify-between gap-4">
                 <div className="text-center flex-1">
