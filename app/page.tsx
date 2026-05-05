@@ -124,9 +124,9 @@ export default function Home() {
           </div>
 
           {/* Right Section - Recent Breakages */}
-          <div className="lg:col-span-1">
-            <div className="border border-gray-200/30 rounded-lg p-8 bg-white/10 backdrop-blur-md sticky top-8 h-fit">
-              <h2 className="text-xl font-bold text-black mb-6">Recent Breakages</h2>
+          <div className="lg:col-span-1 ">
+            <div className=" border border-gray-200/30 rounded-lg p-8 bg-gray-50/50 backdrop-blur-md sticky top-8 h-fit">
+              <h2 className="text-xl font-bold text-black mb-6 ">Recent Breakages</h2>
               
               <div className="marquee-container">
                 <div className="marquee-content">
