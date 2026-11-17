@@ -1,23 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { scans, getToken, type Scan, type Severity, type Vulnerability } from "../../../lib/api";
 
 const sevColor: Record<Severity, string> = {
-  CRITICAL: "bg-red-100 text-red-700 border-red-300",
-  HIGH: "bg-orange-100 text-orange-700 border-orange-300",
-  MEDIUM: "bg-yellow-100 text-yellow-700 border-yellow-300",
-  LOW: "bg-blue-100 text-blue-700 border-blue-300",
-  UNKNOWN: "bg-gray-100 text-gray-700 border-gray-300",
+  CRITICAL: "border-[#3a2020] bg-[#150d0d] text-[#ff8080]",
+  HIGH: "border-[#3a2a18] bg-[#140f09] text-[#ffb578]",
+  MEDIUM: "border-[#33301a] bg-[#12110a] text-[#e6d179]",
+  LOW: "border-[#1f2b3a] bg-[#0b0f15] text-[#8fb8e8]",
+  UNKNOWN: "border-line-strong bg-surface text-dim",
 };
 
 const sevDot: Record<Severity, string> = {
-  CRITICAL: "bg-red-500",
-  HIGH: "bg-orange-400",
-  MEDIUM: "bg-yellow-400",
-  LOW: "bg-blue-400",
-  UNKNOWN: "bg-gray-400",
+  CRITICAL: "bg-[#ff8080]",
+  HIGH: "bg-[#ffb578]",
+  MEDIUM: "bg-[#e6d179]",
+  LOW: "bg-[#8fb8e8]",
+  UNKNOWN: "bg-dim",
 };
 
 function buildAiSummary(scan: Scan): string {
@@ -158,97 +159,102 @@ export default function ScanDetail() {
 
   const newsItems = scan?.status === "DONE" ? newsItemsFromScan(scan.vulnerabilities ?? []) : [];
 
-  const gridBackground: React.CSSProperties = {
-    backgroundImage: `
-      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)
-    `,
-    backgroundSize: "36px 36px",
-  };
-
   return (
-    <div className="min-h-screen w-full bg-white tasa-orbiter-display text-black">
-      <header className="border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <a href="/dashboard" className="text-2xl font-bold">dockerguard.</a>
-        <a href="/dashboard" className="text-sm text-gray-600 hover:text-black">← Back to dashboard</a>
+    <div className="min-h-screen w-full bg-bg text-fg">
+      <header className="sticky top-0 z-30 border-b border-line bg-bg/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <Link href="/dashboard" className="text-[15px] font-medium tracking-tight">
+            dockerguard<span className="text-dim">.</span>
+          </Link>
+          <Link
+            href="/dashboard"
+            className="text-[13px] text-muted transition-colors hover:text-fg"
+          >
+            ← Back to dashboard
+          </Link>
+        </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-10">
+      <main className="mx-auto max-w-6xl px-6 py-16">
         {error && (
-          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2 mb-4">
+          <p className="mb-8 rounded-md border border-[#3a2020] bg-[#150d0d] px-3.5 py-2.5 text-[13px] text-[#ff8080]">
             {error}
           </p>
         )}
 
         {!scan ? (
-          <p className="text-gray-500">Loading…</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-dim">
+            Loading…
+          </p>
         ) : (
           <>
             {/* Image header */}
-            <div className="mb-8 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl px-6 py-5 shadow-sm">
-              <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Image</p>
-              <h2 className="text-2xl font-mono break-all">{scan.image}</h2>
-              <div className="flex items-center gap-3 mt-3 text-sm flex-wrap">
+            <div className="border-b border-line pb-10">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-dim">
+                Image
+              </p>
+              <h1 className="mt-4 font-mono text-xl break-all">{scan.image}</h1>
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
                 <span
-                  className={`inline-block px-3 py-1 rounded font-medium ${
-                    scan.status === "DONE"
-                      ? "bg-green-100 text-green-700"
-                      : scan.status === "FAILED"
-                        ? "bg-red-100 text-red-700"
-                        : scan.status === "RUNNING"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-gray-100 text-gray-700"
+                  className={`rounded border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${
+                    scan.status === "FAILED"
+                      ? "border-[#3a2020] text-[#ff8080]"
+                      : "border-line-strong text-muted"
                   }`}
                 >
                   {scan.status}
                 </span>
-                <span className="text-gray-500">
+                <span className="text-dim">
                   Started {new Date(scan.createdAt).toLocaleString()}
                 </span>
                 {scan.completedAt && (
-                  <span className="text-gray-500">
+                  <span className="text-dim">
                     Completed {new Date(scan.completedAt).toLocaleString()}
                   </span>
                 )}
               </div>
               {scan.errorMessage && (
-                <p className="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
+                <p className="mt-5 rounded-md border border-[#3a2020] bg-[#150d0d] px-3.5 py-2.5 text-[13px] text-[#ff8080]">
                   {scan.errorMessage}
                 </p>
               )}
             </div>
 
             {scan.status !== "DONE" && scan.status !== "FAILED" && (
-              <div className="border border-gray-200 rounded-xl bg-white/80 p-12 text-center">
-                <p className="text-gray-600">Scan in progress… auto-refreshing.</p>
+              <div className="mt-12 rounded-md border border-dashed border-line-strong px-6 py-16 text-center">
+                <p className="text-[14px] text-muted">
+                  Scan in progress — this page refreshes itself.
+                </p>
               </div>
             )}
 
             {scan.status === "DONE" && (
               <>
-                {/* Severity summary cards */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+                {/* Severity summary */}
+                <div className="mt-12 grid grid-cols-2 gap-px bg-line md:grid-cols-5">
                   {(["CRITICAL", "HIGH", "MEDIUM", "LOW", "UNKNOWN"] as Severity[]).map((sev) => (
-                    <div key={sev} className={`border rounded-xl p-4 bg-white/90 ${sevColor[sev]}`}>
-                      <p className="text-xs uppercase tracking-wide">{sev}</p>
-                      <p className="text-2xl font-bold mt-1">{counts[sev] ?? 0}</p>
+                    <div key={sev} className="bg-bg p-5">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-dim">
+                        {sev}
+                      </p>
+                      <p className="mt-3 text-2xl font-medium tracking-tight">
+                        {counts[sev] ?? 0}
+                      </p>
                     </div>
                   ))}
                 </div>
 
-                {/* Two-column layout: AI summary + Recent advisories */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  {/* AI Summary */}
-                  <div className="bg-white/90 border border-gray-200 rounded-xl p-5 shadow-sm">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="text-base">✦</span>
-                        <h3 className="font-semibold text-sm">AI Summary</h3>
-                      </div>
+                {/* AI summary + advisories */}
+                <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div className="rounded-md border border-line bg-surface p-5">
+                    <div className="mb-4 flex items-center justify-between">
+                      <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
+                        AI summary
+                      </h2>
                       {!showSummary && (
                         <button
                           onClick={handleGenerateSummary}
-                          className="text-xs px-3 py-1.5 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors"
+                          className="rounded-md border border-line-strong px-2.5 py-1.5 text-[12px] text-muted transition-colors hover:border-dim hover:text-fg"
                         >
                           Generate
                         </button>
@@ -256,28 +262,30 @@ export default function ScanDetail() {
                     </div>
 
                     {!showSummary && (
-                      <p className="text-xs text-gray-500 leading-relaxed">
-                        Get an AI-generated risk assessment of this image based on the detected
-                        vulnerabilities, including remediation guidance.
+                      <p className="text-[13px] leading-relaxed text-muted">
+                        Generate a risk assessment of this image based on the
+                        detected vulnerabilities, with remediation guidance.
                       </p>
                     )}
 
                     {showSummary && summaryLoading && (
-                      <div className="flex items-center gap-2 text-xs text-gray-500 py-4">
-                        <span className="inline-block w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                      <div className="flex items-center gap-2.5 py-3 text-[13px] text-dim">
+                        <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-dim border-t-transparent" />
                         Analysing scan results…
                       </div>
                     )}
 
                     {showSummary && !summaryLoading && summary && (
                       <>
-                        <p className="text-xs text-gray-700 leading-relaxed">{summary}</p>
+                        <p className="text-[13px] leading-relaxed text-muted">
+                          {summary}
+                        </p>
                         <button
                           onClick={() => {
                             setShowSummary(false);
                             setSummary(null);
                           }}
-                          className="mt-3 text-xs text-gray-400 hover:text-gray-600"
+                          className="mt-4 text-[12px] text-dim transition-colors hover:text-fg"
                         >
                           Dismiss
                         </button>
@@ -285,45 +293,49 @@ export default function ScanDetail() {
                     )}
                   </div>
 
-                  {/* Recent advisories */}
-                  <div className="bg-white/90 border border-gray-200 rounded-xl p-5 shadow-sm">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-base">📰</span>
-                      <h3 className="font-semibold text-sm">Recent Advisories</h3>
-                      <span className="text-xs text-gray-400 ml-auto">from this scan</span>
+                  <div className="rounded-md border border-line bg-surface p-5">
+                    <div className="mb-4 flex items-center justify-between">
+                      <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
+                        Top advisories
+                      </h2>
+                      <span className="font-mono text-[11px] text-dim">
+                        from this scan
+                      </span>
                     </div>
 
                     {newsItems.length === 0 ? (
-                      <p className="text-xs text-gray-500">No vulnerabilities to report.</p>
+                      <p className="text-[13px] text-muted">
+                        No vulnerabilities to report.
+                      </p>
                     ) : (
-                      <ul className="space-y-3">
+                      <ul className="space-y-4">
                         {newsItems.map((v) => {
                           const sev = (v.severity?.toUpperCase() as Severity) ?? "UNKNOWN";
                           return (
                             <li key={v.id} className="flex items-start gap-3">
                               <span
-                                className={`mt-1 w-2 h-2 rounded-full shrink-0 ${sevDot[sev]}`}
+                                className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${sevDot[sev]}`}
                               />
-                              <div className="min-w-0">
+                              <div className="min-w-0 flex-1">
                                 <a
                                   href={`https://nvd.nist.gov/vuln/detail/${v.vulnerabilityId}`}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="text-xs font-mono font-semibold hover:underline"
+                                  className="font-mono text-[12px] text-fg hover:underline"
                                 >
                                   {v.vulnerabilityId}
                                 </a>
-                                <p className="text-xs text-gray-500 truncate">
+                                <p className="truncate text-[12px] text-muted">
                                   {v.title ?? `Affects ${v.pkgName} ${v.installedVersion}`}
                                 </p>
                                 {v.fixedVersion && (
-                                  <p className="text-xs text-green-600 mt-0.5">
-                                    Fix available → {v.fixedVersion}
+                                  <p className="mt-1 font-mono text-[11px] text-dim">
+                                    Fix → {v.fixedVersion}
                                   </p>
                                 )}
                               </div>
                               <span
-                                className={`ml-auto shrink-0 text-xs px-2 py-0.5 rounded border ${sevColor[sev]}`}
+                                className={`shrink-0 rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] ${sevColor[sev]}`}
                               >
                                 {sev}
                               </span>
@@ -336,15 +348,15 @@ export default function ScanDetail() {
                 </div>
 
                 {/* Filters */}
-                <div className="flex gap-2 mb-4 flex-wrap">
+                <div className="mt-12 flex flex-wrap gap-2">
                   {(["ALL", "CRITICAL", "HIGH", "MEDIUM", "LOW"] as const).map((f) => (
                     <button
                       key={f}
                       onClick={() => setFilter(f)}
-                      className={`px-3 py-1 text-xs rounded border ${
+                      className={`rounded-md border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors ${
                         filter === f
-                          ? "bg-black text-white border-black"
-                          : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                          ? "border-fg bg-fg text-black"
+                          : "border-line text-muted hover:border-line-strong hover:text-fg"
                       }`}
                     >
                       {f}
@@ -354,44 +366,56 @@ export default function ScanDetail() {
 
                 {/* Vulnerability table */}
                 {filtered.length === 0 ? (
-                  <div className="border border-dashed border-gray-300 rounded-xl bg-white/80 p-12 text-center">
-                    <p className="text-gray-600">No vulnerabilities found 🎉</p>
+                  <div className="mt-6 rounded-md border border-dashed border-line-strong px-6 py-16 text-center">
+                    <p className="text-[14px] text-muted">
+                      No vulnerabilities in this view.
+                    </p>
                   </div>
                 ) : (
-                  <div className="border border-gray-200 rounded-xl overflow-hidden bg-white/90 shadow-sm">
-                    <table className="w-full text-sm">
-                      <thead className="bg-gray-50 border-b border-gray-200">
-                        <tr>
-                          <th className="px-4 py-3 text-left font-semibold">CVE</th>
-                          <th className="px-4 py-3 text-left font-semibold">Package</th>
-                          <th className="px-4 py-3 text-left font-semibold">Installed</th>
-                          <th className="px-4 py-3 text-left font-semibold">Fixed in</th>
-                          <th className="px-4 py-3 text-left font-semibold">Severity</th>
+                  <div className="mt-6 overflow-x-auto rounded-md border border-line">
+                    <table className="w-full min-w-3xl text-left">
+                      <thead>
+                        <tr className="border-b border-line">
+                          {["CVE", "Package", "Installed", "Fixed in", "Severity"].map((h) => (
+                            <th
+                              key={h}
+                              className="px-5 py-3.5 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-dim"
+                            >
+                              {h}
+                            </th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
                         {filtered.map((v) => {
                           const sev = (v.severity?.toUpperCase() as Severity) ?? "UNKNOWN";
                           return (
-                            <tr key={v.id} className="border-b border-gray-100 hover:bg-gray-50/50">
-                              <td className="px-4 py-3">
+                            <tr
+                              key={v.id}
+                              className="border-b border-line/70 transition-colors last:border-b-0 hover:bg-white/2"
+                            >
+                              <td className="px-5 py-4">
                                 <a
                                   href={`https://nvd.nist.gov/vuln/detail/${v.vulnerabilityId}`}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="font-mono text-xs text-black hover:underline"
+                                  className="font-mono text-[12px] text-fg hover:underline"
                                 >
                                   {v.vulnerabilityId}
                                 </a>
                               </td>
-                              <td className="px-4 py-3 font-mono text-xs">{v.pkgName}</td>
-                              <td className="px-4 py-3 font-mono text-xs">{v.installedVersion}</td>
-                              <td className="px-4 py-3 font-mono text-xs">
+                              <td className="px-5 py-4 font-mono text-[12px] text-muted">
+                                {v.pkgName}
+                              </td>
+                              <td className="px-5 py-4 font-mono text-[12px] text-muted">
+                                {v.installedVersion}
+                              </td>
+                              <td className="px-5 py-4 font-mono text-[12px] text-muted">
                                 {v.fixedVersion ?? "—"}
                               </td>
-                              <td className="px-4 py-3">
+                              <td className="px-5 py-4">
                                 <span
-                                  className={`inline-block px-2 py-1 rounded text-xs font-medium border ${sevColor[sev]}`}
+                                  className={`inline-block rounded border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${sevColor[sev]}`}
                                 >
                                   {sev}
                                 </span>

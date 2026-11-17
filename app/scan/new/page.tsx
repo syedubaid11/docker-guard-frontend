@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { scans, getToken } from "../../../lib/api";
+
+const suggestions = ["alpine:3.18", "nginx:latest", "node:20-alpine", "python:3.12"];
 
 export default function NewScan() {
   const router = useRouter();
@@ -28,40 +31,59 @@ export default function NewScan() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-white tasa-orbiter-display text-black">
-      <header className="border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <a href="/dashboard" className="text-2xl font-bold">dockerguard.</a>
-        <a href="/dashboard" className="text-sm text-gray-600 hover:text-black">← Back</a>
+    <div className="min-h-screen w-full bg-bg text-fg">
+      <header className="sticky top-0 z-30 border-b border-line bg-bg/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <Link href="/dashboard" className="text-[15px] font-medium tracking-tight">
+            dockerguard<span className="text-dim">.</span>
+          </Link>
+          <Link
+            href="/dashboard"
+            className="text-[13px] text-muted transition-colors hover:text-fg"
+          >
+            ← Back
+          </Link>
+        </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-16">
-        <h2 className="text-4xl mb-2">New Scan</h2>
-        <p className="text-gray-600 mb-8">
-          Enter a Docker image reference to scan for vulnerabilities.
+      <main className="mx-auto max-w-xl px-6 py-20">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-dim">
+          New scan
+        </p>
+        <h1 className="mt-6 text-2xl font-medium tracking-[-0.02em]">
+          Which image should we check?
+        </h1>
+        <p className="mt-3 text-[14px] leading-relaxed text-muted">
+          Enter any public or private registry reference. Scanning starts
+          immediately.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="mt-10 space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-black mb-2">
+            <label
+              htmlFor="image"
+              className="mb-2 block font-mono text-[11px] uppercase tracking-[0.16em] text-dim"
+            >
               Image
             </label>
             <input
+              id="image"
               type="text"
               value={image}
               onChange={(e) => setImage(e.target.value)}
-              placeholder="alpine:3.18  or  ghcr.io/org/repo:tag"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black font-mono text-sm"
+              placeholder="alpine:3.18"
+              className="w-full rounded-md border border-line-strong bg-surface px-3.5 py-3 font-mono text-sm text-fg transition-colors placeholder:text-dim focus:border-muted focus:outline-none"
               required
             />
           </div>
 
-          <div className="flex gap-2 flex-wrap pt-2">
-            {["alpine:3.18", "nginx:latest", "node:20-alpine", "python:3.12"].map((s) => (
+          <div className="flex flex-wrap gap-2">
+            {suggestions.map((s) => (
               <button
                 key={s}
                 type="button"
                 onClick={() => setImage(s)}
-                className="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded font-mono"
+                className="rounded-md border border-line px-2.5 py-1.5 font-mono text-[11px] text-muted transition-colors hover:border-line-strong hover:text-fg"
               >
                 {s}
               </button>
@@ -69,7 +91,7 @@ export default function NewScan() {
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
+            <p className="rounded-md border border-[#3a2020] bg-[#150d0d] px-3.5 py-2.5 text-[13px] text-[#ff8080]">
               {error}
             </p>
           )}
@@ -77,9 +99,9 @@ export default function NewScan() {
           <button
             type="submit"
             disabled={loading || !image.trim()}
-            className="w-full px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 disabled:opacity-60 mt-4"
+            className="w-full rounded-md bg-fg px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-white disabled:opacity-40"
           >
-            {loading ? "Starting…" : "Start Scan"}
+            {loading ? "Starting…" : "Start scan"}
           </button>
         </form>
       </main>

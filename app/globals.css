@@ -1,60 +1,47 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #000000;
+  --surface: #090909;
+  --line: #1b1b1b;
+  --line-strong: #2b2b2b;
+  --fg: #ededed;
+  --muted: #a1a1a1;
+  --dim: #767676;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* TASA Orbiter Font Utilities */
-.tasa-orbiter-display {
-  font-family: "TASA Orbiter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
-  font-style: normal;
+::selection {
+  background: var(--fg);
+  color: #000;
 }
 
-.tasa-orbiter-heading {
-  font-family: "TASA Orbiter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.tasa-orbiter-body {
-  font-family: "TASA Orbiter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom Scrollbar Styles */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -62,89 +49,53 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #999;
-  border-radius: 5px;
-  transition: background 0.3s ease;
+  background: #242424;
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #666;
+  background: #363636;
 }
 
-/* Firefox Scrollbar */
 * {
-  scrollbar-color: #999 transparent;
+  scrollbar-color: #242424 transparent;
   scrollbar-width: thin;
 }
 
-/* Fade In Animation for Breakages */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Faint grid, faded out towards the edges */
+.grid-backdrop {
+  background-image:
+    linear-gradient(to right, #101010 1px, transparent 1px),
+    linear-gradient(to bottom, #101010 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 0%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 55% at 50% 0%, #000 30%, transparent 100%);
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-/* Marquee Scroll Animation */
-@keyframes marquee {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(100vh);
-  }
-}
-
-.marquee-container {
+/* Vertical ticker for the breakages feed */
+.ticker {
+  height: 328px;
   overflow: hidden;
-  width: 100%;
-  height: 380px;
-  position: relative;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
 }
 
-.marquee-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  animation: marquee 240s linear infinite;
-  width: 100%;
+.ticker-track {
+  animation: ticker 44s linear infinite;
 }
 
-.marquee-content:hover {
+.ticker:hover .ticker-track {
   animation-play-state: paused;
 }
 
-/* Feature Card Gradient Hover */
-.feature-card {
-  position: relative;
-  overflow: hidden;
-
-  /* define initial state */
-  background: linear-gradient(to right, rgba(255, 192, 203, 0), transparent);
-  box-shadow: 0 0 0 rgba(200, 200, 200, 0);
-
-  transition: all 0.6s ease; /* reduce from 4s (too slow) */
+@keyframes ticker {
+  to {
+    transform: translateY(-50%);
+  }
 }
 
-.feature-card:hover {
-  background: linear-gradient(to right, rgba(255, 192, 203, 0.1), transparent);
-  box-shadow: 0 2px 8px rgba(200, 200, 200, 0.1);
-  cursor: pointer;
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
 }
-
-.feature-card:hover h3 {
-  color: #000;
-}
-
-.feature-card:hover p {
-  color: #4b5563;
-}
-
