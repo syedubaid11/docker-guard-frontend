@@ -81,7 +81,26 @@ function buildAiSummary(scan: Scan): string {
   return parts.join(" ");
 }
 
+// Colour band for the model's risk score. shortcut: fixed cut-offs, not tuned on data; revisit after model evaluation.
+function riskTone(risk: number): Severity {
+  return risk >= 0.5 ? "CRITICAL" : risk >= 0.2 ? "HIGH" : "LOW";
+}
+
+function RiskBadge({ risk }: { risk: number }) {
+  return (
+    <span
+      title="Exploit risk predicted by the ML model"
+      className={`inline-block shrink-0 rounded border px-2 py-1 font-mono text-[10px] tracking-[0.14em] ${sevColor[riskTone(risk)]}`}
+    >
+      {Math.round(risk * 100)}%
+    </span>
+  );
+}
+
 function newsItemsFromScan(vulns: Vulnerability[]) {
+  // The API already returns vulnerabilities ranked by exploit risk ("Fix First"), unscored ones last.
+  if (vulns.some((v) => v.riskScore != null)) return vulns.slice(0, 5);
+  // Older scans have no risk scores: fall back to ranking by severity.
   const ordered = [...vulns].sort((a, b) => {
     const order: Record<string, number> = {
       CRITICAL: 0,
@@ -296,10 +315,10 @@ export default function ScanDetail() {
                   <div className="rounded-md border border-line bg-surface p-5">
                     <div className="mb-4 flex items-center justify-between">
                       <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
-                        Top advisories
+                        Fix first
                       </h2>
                       <span className="font-mono text-[11px] text-dim">
-                        from this scan
+                        ranked by exploit risk
                       </span>
                     </div>
 
@@ -333,12 +352,21 @@ export default function ScanDetail() {
                                     Fix → {v.fixedVersion}
                                   </p>
                                 )}
+                                {v.riskReasons?.length > 0 && (
+                                  <p className="mt-1 text-[11px] text-dim">
+                                    Why: {v.riskReasons.join(" · ")}
+                                  </p>
+                                )}
                               </div>
-                              <span
-                                className={`shrink-0 rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] ${sevColor[sev]}`}
-                              >
-                                {sev}
-                              </span>
+                              {v.riskScore != null ? (
+                                <RiskBadge risk={v.riskScore} />
+                              ) : (
+                                <span
+                                  className={`shrink-0 rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] ${sevColor[sev]}`}
+                                >
+                                  {sev}
+                                </span>
+                              )}
                             </li>
                           );
                         })}
@@ -376,7 +404,7 @@ export default function ScanDetail() {
                     <table className="w-full min-w-3xl text-left">
                       <thead>
                         <tr className="border-b border-line">
-                          {["CVE", "Package", "Installed", "Fixed in", "Severity"].map((h) => (
+                          {["CVE", "Risk", "Package", "Installed", "Fixed in", "Severity"].map((h) => (
                             <th
                               key={h}
                               className="px-5 py-3.5 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-dim"
@@ -403,6 +431,13 @@ export default function ScanDetail() {
                                 >
                                   {v.vulnerabilityId}
                                 </a>
+                              </td>
+                              <td className="px-5 py-4" title={v.riskReasons?.join("\n")}>
+                                {v.riskScore != null ? (
+                                  <RiskBadge risk={v.riskScore} />
+                                ) : (
+                                  <span className="font-mono text-[12px] text-dim">—</span>
+                                )}
                               </td>
                               <td className="px-5 py-4 font-mono text-[12px] text-muted">
                                 {v.pkgName}
