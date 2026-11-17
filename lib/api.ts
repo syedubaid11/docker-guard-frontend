@@ -55,6 +55,9 @@ export interface Vulnerability {
   severity: Severity;
   title: string | null;
   description: string | null;
+  // From the ML model: exploit-risk score (0-1) and up to 3 reasons. Null/empty when not scored.
+  riskScore: number | null;
+  riskReasons: string[];
 }
 
 export interface Scan {
